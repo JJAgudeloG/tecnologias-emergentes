@@ -33,11 +33,7 @@
 
     .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
 
-    /* Hero */
-    .project-hero {
-      padding: 4rem 0 3rem;
-      border-bottom: 1px solid var(--border);
-    }
+    .project-hero { padding: 4rem 0 3rem; border-bottom: 1px solid var(--border); }
     .breadcrumb {
       font-family: 'Space Mono', monospace; font-size: .7rem;
       color: var(--muted); letter-spacing: .1em; margin-bottom: 1.5rem;
@@ -65,7 +61,6 @@
     .meta-label { font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
     .meta-value { color: var(--text); font-size: .82rem; }
 
-    /* Content */
     .content { padding: 4rem 0; }
     .content-section { margin-bottom: 3.5rem; }
     h2 {
@@ -84,22 +79,19 @@
     p { color: var(--muted); font-size: .94rem; margin-bottom: .8rem; }
     strong { color: var(--text); }
 
-    /* Slide Cards */
     .slide-grid {
       display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 1rem; margin-top: 1.2rem;
     }
     .slide-item {
       background: var(--card); border: 1px solid var(--border);
-      border-radius: 10px; padding: 1.2rem 1.4rem;
-      transition: border-color .2s;
+      border-radius: 10px; padding: 1.2rem 1.4rem; transition: border-color .2s;
     }
     .slide-item:hover { border-color: var(--accent); }
     .slide-num { font-family: 'Space Mono', monospace; font-size: .68rem; color: var(--accent); margin-bottom: .4rem; }
     .slide-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .88rem; margin-bottom: .3rem; }
     .slide-desc { font-size: .78rem; color: var(--muted); }
 
-    /* Advantages */
     .adv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
     .adv-item {
       background: var(--card); border: 1px solid var(--border);
@@ -110,44 +102,22 @@
     .adv-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .88rem; }
     .adv-desc { font-size: .78rem; color: var(--muted); }
 
-    /* Risk items */
     .risk-item {
       background: var(--card); border: 1px solid var(--border);
       border-left: 3px solid #ef4444;
-      border-radius: 0 10px 10px 0; padding: 1rem 1.4rem;
-      margin-bottom: .8rem;
+      border-radius: 0 10px 10px 0; padding: 1rem 1.4rem; margin-bottom: .8rem;
     }
     .risk-title { font-weight: 600; margin-bottom: .3rem; font-size: .9rem; }
     .risk-desc { font-size: .82rem; color: var(--muted); }
 
-    /* Video section */
     .video-section {
       background: var(--card); border: 1px solid var(--border);
       border-radius: 12px; overflow: hidden; margin-top: 1.2rem;
     }
     .video-embed { position: relative; width: 100%; aspect-ratio: 16/9; background: var(--surface); }
     .video-embed iframe { width: 100%; height: 100%; border: none; display: block; }
-    .video-placeholder {
-      width: 100%; height: 100%;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: .6rem; color: var(--muted); font-size: .85rem; text-align: center; padding: 2rem;
-    }
-    .video-placeholder svg { opacity: .2; }
     .video-info { padding: 1.2rem 1.5rem; }
     .video-title-text { font-family: 'Syne', sans-serif; font-weight: 700; margin-bottom: .3rem; }
-    .video-steps {
-      background: rgba(59,130,246,.06); border: 1px solid rgba(59,130,246,.2);
-      border-radius: 8px; padding: 1rem 1.2rem; margin-top: 1rem;
-    }
-    .video-steps h4 { font-size: .82rem; font-weight: 600; color: var(--accent2); margin-bottom: .5rem; font-family: 'Space Mono', monospace; }
-    .video-steps ol { padding-left: 1.2rem; }
-    .video-steps li { font-size: .8rem; color: var(--muted); margin-bottom: .3rem; }
-    .video-steps code {
-      background: var(--tag); border: 1px solid var(--border); border-radius: 3px;
-      padding: 0 .35rem; font-family: 'Space Mono', monospace;
-      font-size: .78rem; color: var(--accent2);
-    }
 
     footer {
       background: var(--surface); border-top: 1px solid var(--border);
@@ -166,14 +136,15 @@
 <nav>
   <a class="nav-logo" href="index.html">TEC<span>.</span>EMERGENTES</a>
   <a class="back-btn" href="index.html">
-    <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M19 12H5M5 12l7-7M5 12l7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
+      <path d="M19 12H5M5 12l7-7M5 12l7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
     Volver al portafolio
   </a>
 </nav>
 
 <div class="container">
 
-  <!-- HERO -->
   <div class="project-hero">
     <div class="breadcrumb">PORTAFOLIO / <span>TRABAJOS EN PAREJA</span> / T1</div>
     <div class="project-tags">
@@ -183,7 +154,9 @@
       <span class="tag">Trabajo #1</span>
     </div>
     <h1>Internet de las Cosas<br><span>(IoT) en la Seguridad</span></h1>
-    <p style="color:var(--text); font-size:1rem; max-width:600px;">Tecnología inteligente para proteger espacios en tiempo real — análisis de aplicaciones, ventajas, riesgos y proyecciones futuras del IoT en el ámbito de la seguridad.</p>
+    <p style="color:var(--text); font-size:1rem; max-width:600px;">
+      Tecnología inteligente para proteger espacios en tiempo real — análisis de aplicaciones, ventajas, riesgos y proyecciones futuras del IoT en el ámbito de la seguridad.
+    </p>
     <div class="project-meta">
       <div class="meta-item">
         <span class="meta-label">AUTORES</span>
@@ -204,22 +177,18 @@
     </div>
   </div>
 
-  <!-- CONTENT -->
   <div class="content">
 
-    <!-- Qué es IoT -->
     <div class="content-section">
       <h2><span class="h2-icon">🌐</span>¿Qué es el Internet de las Cosas?</h2>
       <p>El <strong>Internet de las Cosas (IoT)</strong> es la conexión de objetos físicos a internet para que puedan enviar y recibir información automáticamente mediante sensores. Desde relojes inteligentes hasta cámaras de seguridad, los dispositivos IoT forman una red interconectada capaz de actuar de manera autónoma.</p>
     </div>
 
-    <!-- IoT en seguridad -->
     <div class="content-section">
       <h2><span class="h2-icon">🔐</span>IoT en la Seguridad</h2>
       <p>Es el uso de dispositivos inteligentes conectados a internet que permiten <strong>vigilar y proteger espacios en tiempo real</strong>. Un ejemplo concreto es la capacidad de recibir alertas en el celular cuando ocurre algo sospechoso en el entorno monitorizado.</p>
     </div>
 
-    <!-- Ciudades inteligentes -->
     <div class="content-section">
       <h2><span class="h2-icon">🏙️</span>IoT en Ciudades Inteligentes</h2>
       <p>El IoT juega un papel esencial en las ciudades inteligentes. A través de sensores, cámaras y diferentes dispositivos, las ciudades pueden monitorear en tiempo real aspectos como:</p>
@@ -242,7 +211,6 @@
       </div>
     </div>
 
-    <!-- Ventajas -->
     <div class="content-section">
       <h2><span class="h2-icon">✅</span>Ventajas del IoT en la Seguridad</h2>
       <p>El IoT aporta múltiples beneficios en el ámbito de la seguridad. Uno de los principales es el <strong>monitoreo constante</strong>, ya que los dispositivos funcionan las 24 horas del día, permitiendo detectar movimientos sospechosos, incendios o accesos no autorizados de manera inmediata.</p>
@@ -270,7 +238,6 @@
       </div>
     </div>
 
-    <!-- Riesgos -->
     <div class="content-section">
       <h2><span class="h2-icon">⚠️</span>Riesgos del IoT</h2>
       <div class="risk-item">
@@ -283,10 +250,55 @@
       </div>
     </div>
 
-    <!-- Futuro -->
     <div class="content-section">
       <h2><span class="h2-icon">🚀</span>Futuro del IoT en la Seguridad</h2>
       <p>El futuro del IoT en la seguridad está estrechamente relacionado con la <strong>Inteligencia Artificial y el análisis de datos</strong>. Los sistemas no solo detectarán incidentes, sino que podrán <strong>predecir comportamientos sospechosos</strong> mediante patrones de información, elevando la seguridad a un nivel preventivo y proactivo.</p>
+    </div>
+
+    <div class="content-section">
+      <h2><span class="h2-icon">📑</span>Resumen de la Presentación</h2>
+      <div class="slide-grid">
+        <div class="slide-item">
+          <div class="slide-num">DIAPOSITIVA 01</div>
+          <div class="slide-title">Portada</div>
+          <div class="slide-desc">Título, subtítulo y autores de la exposición.</div>
+        </div>
+        <div class="slide-item">
+          <div class="slide-num">DIAPOSITIVA 02</div>
+          <div class="slide-title">¿Qué es el IoT?</div>
+          <div class="slide-desc">Definición y ejemplos de dispositivos conectados.</div>
+        </div>
+        <div class="slide-item">
+          <div class="slide-num">DIAPOSITIVA 03</div>
+          <div class="slide-title">IoT en la Seguridad</div>
+          <div class="slide-desc">Aplicaciones prácticas y ejemplos en tiempo real.</div>
+        </div>
+        <div class="slide-item">
+          <div class="slide-num">DIAPOSITIVA 04</div>
+          <div class="slide-title">Ciudades Inteligentes</div>
+          <div class="slide-desc">Tráfico, sensores ambientales y gestión de emergencias.</div>
+        </div>
+        <div class="slide-item">
+          <div class="slide-num">DIAPOSITIVA 05</div>
+          <div class="slide-title">Ventajas</div>
+          <div class="slide-desc">Monitoreo 24/7, respuesta inmediata y prevención.</div>
+        </div>
+        <div class="slide-item">
+          <div class="slide-num">DIAPOSITIVA 06</div>
+          <div class="slide-title">Riesgos</div>
+          <div class="slide-desc">Ciberataques y pérdida de privacidad.</div>
+        </div>
+        <div class="slide-item">
+          <div class="slide-num">DIAPOSITIVA 07</div>
+          <div class="slide-title">Futuro del IoT</div>
+          <div class="slide-desc">IA + análisis de datos + predicción de amenazas.</div>
+        </div>
+        <div class="slide-item">
+          <div class="slide-num">DIAPOSITIVA 08</div>
+          <div class="slide-title">Conclusión</div>
+          <div class="slide-desc">IoT mejora la protección desde cualquier lugar del mundo.</div>
+        </div>
+      </div>
     </div>
 
     <!-- VIDEO -->
@@ -294,44 +306,21 @@
       <h2><span class="h2-icon">🎬</span>Video de la Exposición</h2>
       <div class="video-section">
         <div class="video-embed">
-          <!--
-            ════════════════════════════════════════════════
-            PASO A PASO PARA AGREGAR TU VIDEO:
-
-            1. Sube el video a YouTube
-               (puede ser "No listado" para privacidad)
-
-            2. En YouTube: Compartir → Insertar
-               Copia el enlace del src, ejemplo:
-               https://www.youtube.com/embed/dQw4w9WgXcQ
-
-            3. BORRA el bloque <div class="video-placeholder">
-               hasta su </div> de cierre
-
-            4. ESCRIBE esto en su lugar:
-               <iframe
-                 src="https://www.youtube.com/embed/TU_ID"
-                 allow="accelerometer; autoplay; clipboard-write;
-                        encrypted-media; gyroscope; picture-in-picture"
-                 allowfullscreen>
-               </iframe>
-
-            5. Guarda → recarga → ¡listo! 🎉
-            ════════════════════════════════════════════════
-          -->
-
-<iframe 
-  src="youtube.com/embed/nL0u3kspYGs"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen
-  style="width:100%;height:100%;border:none;display:block;">
-</iframe>
-
+          <iframe
+            src="https://www.youtube.com/embed/nL0u3kspYGs"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            style="width:100%;height:100%;border:none;display:block;">
+          </iframe>
+        </div>
         <div class="video-info">
-          <div class="video-title-text">IoT en la Seguridad video explicativo</div>
-          <div style="font-size:.75rem; color:var(--muted); font-family:'Space Mono',monospace; margin-top:.3rem;">Juan José Agudelo &amp; Sharon Zamora · 2026</div>
-          <div class="video-steps">
-
+          <div class="video-title-text">IoT en la Seguridad — Video explicativo</div>
+          <div style="font-size:.75rem; color:var(--muted); font-family:'Space Mono',monospace; margin-top:.3rem;">
+            Juan José Agudelo &amp; Sharon Zamora · 2026
+          </div>
+        </div>
+      </div>
+    </div>
 
   </div><!-- /content -->
 </div><!-- /container -->
