@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teachable Machine — Tecnologías Emergentes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0b0f; --surface: #111318; --card: #161b26;
+      --border: #1f2937; --accent: #3b82f6; --accent2: #06b6d4;
+      --gold: #f59e0b; --text: #e2e8f0; --muted: #64748b; --tag: #1e293b;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.7; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,11,15,.85); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav-logo { font-family: 'Space Mono', monospace; font-size: .85rem; color: var(--accent2); letter-spacing: .08em; text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .back-btn {
+      display: flex; align-items: center; gap: .5rem;
+      font-family: 'Space Mono', monospace; font-size: .78rem;
+      color: var(--muted); text-decoration: none; transition: color .2s;
+    }
+    .back-btn:hover { color: var(--text); }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
+
+    .project-hero { padding: 4rem 0 3rem; border-bottom: 1px solid var(--border); }
+    .breadcrumb {
+      font-family: 'Space Mono', monospace; font-size: .7rem;
+      color: var(--muted); letter-spacing: .1em; margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .breadcrumb span { color: var(--accent); }
+    .project-tags { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+    .tag {
+      background: var(--tag); border: 1px solid var(--border);
+      border-radius: 999px; padding: .25rem .8rem;
+      font-size: .7rem; font-family: 'Space Mono', monospace; color: var(--muted);
+    }
+    .tag.blue { border-color: rgba(59,130,246,.3); color: var(--accent); background: rgba(59,130,246,.08); }
+    .tag.cyan { border-color: rgba(6,182,212,.3); color: var(--accent2); background: rgba(6,182,212,.08); }
+    h1 {
+      font-family: 'Syne', sans-serif; font-size: clamp(2rem,5vw,3rem);
+      font-weight: 800; line-height: 1.1; letter-spacing: -.03em; margin-bottom: 1rem;
+    }
+    h1 span { color: var(--accent2); }
+    .project-meta {
+      display: flex; gap: 2rem; flex-wrap: wrap;
+      font-family: 'Space Mono', monospace; margin-top: 1.5rem;
+    }
+    .meta-item { display: flex; flex-direction: column; gap: .2rem; }
+    .meta-label { font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .meta-value { color: var(--text); font-size: .82rem; }
+
+    /* Tabs */
+    .tabs-nav {
+      display: flex; gap: .5rem; flex-wrap: wrap;
+      margin: 3rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0;
+    }
+    .tab-btn {
+      background: none; border: none; border-bottom: 2px solid transparent;
+      padding: .75rem 1.4rem; margin-bottom: -1px;
+      font-family: 'Space Mono', monospace; font-size: .78rem;
+      color: var(--muted); cursor: pointer; transition: color .2s, border-color .2s;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--accent2); border-bottom-color: var(--accent2); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Demo cards */
+    .demo-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden; margin-bottom: 2rem;
+    }
+    .demo-header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      padding: 1.5rem 2rem; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .demo-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: rgba(59,130,246,.15); border: 1px solid rgba(59,130,246,.3);
+      display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;
+    }
+    .demo-header-text h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; }
+    .demo-header-text p { font-size: .82rem; color: var(--muted); margin-top: .2rem; }
+    .demo-body { padding: 2rem; }
+
+    /* Model notice */
+    .model-notice {
+      background: rgba(245,158,11,.06); border: 1px solid rgba(245,158,11,.25);
+      border-radius: 10px; padding: 1rem 1.4rem; margin-bottom: 1.5rem;
+      font-size: .83rem; color: var(--muted);
+    }
+    .model-notice strong { color: var(--gold); }
+
+    /* Demo area */
+    .demo-area {
+      display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+    }
+    .start-btn {
+      background: var(--accent); color: white; border: none;
+      border-radius: 10px; padding: .8rem 2.2rem;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: .95rem;
+      cursor: pointer; transition: background .2s, transform .15s;
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .start-btn:hover { background: #2563eb; transform: translateY(-2px); }
+    .start-btn:active { transform: translateY(0); }
+
+    .canvas-wrapper {
+      border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .canvas-wrapper canvas { display: block; }
+
+    #webcam-container canvas { border-radius: 12px; border: 1px solid var(--border); }
+
+    .labels-box {
+      width: 100%; max-width: 300px;
+      display: flex; flex-direction: column; gap: .5rem;
+    }
+    .labels-box div {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: .5rem 1rem;
+      font-family: 'Space Mono', monospace; font-size: .78rem; color: var(--accent2);
+    }
+
+    /* Info sections */
+    .info-section { margin-top: 2.5rem; }
+    .info-section h4 {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+      margin-bottom: .8rem; color: var(--text);
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .info-section p { font-size: .88rem; color: var(--muted); margin-bottom: .6rem; }
+
+    .step-list { list-style: none; display: flex; flex-direction: column; gap: .5rem; margin-top: .5rem; }
+    .step-list li {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: .7rem 1rem;
+      font-size: .84rem; color: var(--muted);
+      display: flex; align-items: flex-start; gap: .8rem;
+    }
+    .step-num {
+      background: var(--accent); color: white;
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem; font-weight: 700; flex-shrink: 0; margin-top: .1rem;
+    }
+
+    footer {
+      background: var(--surface); border-top: 1px solid var(--border);
+      padding: 2rem; text-align: center; margin-top: 4rem;
+    }
+    footer p { font-size: .75rem; color: var(--muted); font-family: 'Space Mono', monospace; }
+    footer span { color: var(--accent2); }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">TEC<span>.</span>EMERGENTES</a>
+  <a class="back-btn" href="index.html">
+    <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
+      <path d="M19 12H5M5 12l7-7M5 12l7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+    Volver al portafolio
+  </a>
+</nav>
+
+<div class="container">
+
+  <div class="project-hero">
+    <div class="breadcrumb">PORTAFOLIO / <span>TRABAJOS EN PAREJA</span> / T2</div>
+    <div class="project-tags">
+      <span class="tag blue">IA</span>
+      <span class="tag cyan">Teachable Machine</span>
+      <span class="tag">Machine Learning</span>
+      <span class="tag">Trabajo #2</span>
+    </div>
+    <h1>Teachable Machine<br><span>Modelos de IA</span></h1>
+    <p style="color:var(--text); font-size:1rem; max-width:640px;">
+      Exploración práctica de modelos de Inteligencia Artificial entrenados con Google Teachable Machine: reconocimiento de poses, imágenes y audio en tiempo real desde el navegador.
+    </p>
+    <div class="project-meta">
+      <div class="meta-item">
+        <span class="meta-label">AUTORES</span>
+        <span class="meta-value">Juan José Agudelo &amp; Sharon Zamora</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">MATERIA</span>
+        <span class="meta-value">Tecnologías Emergentes</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">TIPO</span>
+        <span class="meta-value">Demo Interactiva / ML</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">AÑO</span>
+        <span class="meta-value">2026</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="showTab('pose', this)">🕺 Modelo de Poses</button>
+    <button class="tab-btn" onclick="showTab('image', this)">🖼️ Modelo de Imágenes</button>
+    <button class="tab-btn" onclick="showTab('audio', this)">🎙️ Modelo de Audio</button>
+  </div>
+
+  <!-- ══════════════ TAB 1: POSE ══════════════ -->
+  <div id="tab-pose" class="tab-panel active">
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-icon">🕺</div>
+        <div class="demo-header-text">
+          <h3>Reconocimiento de Poses</h3>
+          <p>Detecta y clasifica posiciones del cuerpo humano usando la cámara en tiempo real</p>
+        </div>
+      </div>
+      <div class="demo-body">
+        <div class="model-notice">
+          <strong>⚠️ Modelo requerido:</strong> Para que funcione debes subir tu carpeta
+          <code style="background:var(--tag);padding:0 .3rem;border-radius:3px;font-family:monospace;">pose_model/</code>
+          al repositorio. Descárgala desde Teachable Machine → Export → Download.
+        </div>
+        <div class="demo-area">
+          <button class="start-btn" onclick="initPose()">▶ Activar cámara</button>
+          <div class="canvas-wrapper">
+            <canvas id="pose-canvas"></canvas>
+          </div>
+          <div class="labels-box" id="pose-labels"></div>
+        </div>
+
+        <div class="info-section">
+          <h4>🧠 ¿Cómo funciona?</h4>
+          <p>El modelo usa <strong>PoseNet</strong> para detectar los puntos clave del cuerpo (articulaciones, cabeza, manos) y luego clasifica la postura según las clases entrenadas en Teachable Machine.</p>
+        </div>
+
+        <div class="info-section">
+          <h4>📁 Cómo subir tu modelo</h4>
+          <ul class="step-list">
+            <li><span class="step-num">1</span>Exporta tu modelo desde teachablemachine.withgoogle.com → Export Model → Download my model.</li>
+            <li><span class="step-num">2</span>Descomprime el ZIP y renombra la carpeta a <code style="color:var(--accent2);">pose_model</code>.</li>
+            <li><span class="step-num">3</span>En GitHub: Add file → Upload files → sube la carpeta completa.</li>
+            <li><span class="step-num">4</span>Haz commit y espera 1 minuto para que GitHub Pages se actualice.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ TAB 2: IMAGE ══════════════ -->
+  <div id="tab-image" class="tab-panel">
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-icon">🖼️</div>
+        <div class="demo-header-text">
+          <h3>Reconocimiento de Imágenes</h3>
+          <p>Clasifica objetos o imágenes capturadas por la cámara en tiempo real</p>
+        </div>
+      </div>
+      <div class="demo-body">
+        <div class="model-notice">
+          <strong>⚠️ Modelo requerido:</strong> Para que funcione debes subir tu carpeta
+          <code style="background:var(--tag);padding:0 .3rem;border-radius:3px;font-family:monospace;">image_model/</code>
+          al repositorio. Descárgala desde Teachable Machine → Export → Download.
+        </div>
+        <div class="demo-area">
+          <button class="start-btn" onclick="initImage()">▶ Activar cámara</button>
+          <div id="webcam-container" style="border-radius:12px; overflow:hidden; border:1px solid var(--border);"></div>
+          <div class="labels-box" id="image-labels"></div>
+        </div>
+
+        <div class="info-section">
+          <h4>🧠 ¿Cómo funciona?</h4>
+          <p>El modelo de imágenes analiza cada frame de la cámara y lo compara con las clases que fueron entrenadas. Devuelve una probabilidad para cada clase definida.</p>
+        </div>
+
+        <div class="info-section">
+          <h4>📁 Cómo subir tu modelo</h4>
+          <ul class="step-list">
+            <li><span class="step-num">1</span>Exporta tu modelo desde teachablemachine.withgoogle.com → Export Model → Download my model.</li>
+            <li><span class="step-num">2</span>Descomprime el ZIP y renombra la carpeta a <code style="color:var(--accent2);">image_model</code>.</li>
+            <li><span class="step-num">3</span>En GitHub: Add file → Upload files → sube la carpeta completa.</li>
+            <li><span class="step-num">4</span>Haz commit y espera 1 minuto para que GitHub Pages se actualice.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ TAB 3: AUDIO ══════════════ -->
+  <div id="tab-audio" class="tab-panel">
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-icon">🎙️</div>
+        <div class="demo-header-text">
+          <h3>Reconocimiento de Audio</h3>
+          <p>Detecta y clasifica comandos de voz o sonidos en tiempo real usando el micrófono</p>
+        </div>
+      </div>
+      <div class="demo-body">
+        <div class="model-notice">
+          <strong>⚠️ Modelo requerido:</strong> Para que funcione debes subir tu carpeta
+          <code style="background:var(--tag);padding:0 .3rem;border-radius:3px;font-family:monospace;">audio_model/</code>
+          al repositorio. Descárgala desde Teachable Machine → Export → Download.
+        </div>
+        <div class="demo-area">
+          <button class="start-btn" onclick="initAudio()">🎙️ Activar micrófono</button>
+          <div style="width:80px; height:80px; border-radius:50%; background:rgba(59,130,246,.1); border:2px solid rgba(59,130,246,.3); display:flex; align-items:center; justify-content:center; font-size:2rem;" id="audio-indicator">🎙️</div>
+          <div class="labels-box" id="audio-labels"></div>
+        </div>
+
+        <div class="info-section">
+          <h4>🧠 ¿Cómo funciona?</h4>
+          <p>El modelo de audio usa la <strong>Transformada de Fourier (FFT)</strong> para analizar las frecuencias del micrófono y clasifica el sonido según las clases entrenadas, con un umbral de probabilidad del 75%.</p>
+        </div>
+
+        <div class="info-section">
+          <h4>📁 Cómo subir tu modelo</h4>
+          <ul class="step-list">
+            <li><span class="step-num">1</span>Exporta tu modelo desde teachablemachine.withgoogle.com → Export Model → Download my model.</li>
+            <li><span class="step-num">2</span>Descomprime el ZIP y renombra la carpeta a <code style="color:var(--accent2);">audio_model</code>.</li>
+            <li><span class="step-num">3</span>En GitHub: Add file → Upload files → sube la carpeta completa.</li>
+            <li><span class="step-num">4</span>Haz commit y espera 1 minuto para que GitHub Pages se actualice.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<footer>
+  <p>Tecnologías Emergentes · <span>Juan José Agudelo</span> &amp; <span>Sharon Zamora</span> · 2026</p>
+</footer>
+
+<!-- TensorFlow + Teachable Machine libraries -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/speech-commands@0.4.0/dist/speech-commands.min.js"></script>
+
+<script>
+  // ── TABS ──
+  function showTab(name, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // ── POSE MODEL ──
+  let poseModel, poseWebcam, poseCtx, posePredicting = false;
+  async function initPose() {
+    if (posePredicting) return;
+    posePredicting = true;
+    try {
+      const URL = "./pose_model/";
+      poseModel = await tmPose.load(URL + "model.json", URL + "metadata.json");
+      const maxPred = poseModel.getTotalClasses();
+      const size = 220;
+      poseWebcam = new tmPose.Webcam(size, size, true);
+      await poseWebcam.setup();
+      await poseWebcam.play();
+      const canvas = document.getElementById("pose-canvas");
+      canvas.width = size; canvas.height = size;
+      poseCtx = canvas.getContext("2d");
+      const labelBox = document.getElementById("pose-labels");
+      labelBox.innerHTML = "";
+      for (let i = 0; i < maxPred; i++) {
+        const d = document.createElement("div");
+        labelBox.appendChild(d);
+      }
+      poseLoop();
+    } catch(e) {
+      alert("Error al cargar el modelo de poses. Asegúrate de haber subido la carpeta pose_model/ al repositorio.");
+      posePredicting = false;
+    }
+  }
+  async function poseLoop() {
+    poseWebcam.update();
+    const { pose, posenetOutput } = await poseModel.estimatePose(poseWebcam.canvas);
+    const pred = await poseModel.predict(posenetOutput);
+    const labels = document.getElementById("pose-labels");
+    for (let i = 0; i < pred.length; i++) {
+      labels.childNodes[i].innerHTML = pred[i].className + ": " + (pred[i].probability * 100).toFixed(1) + "%";
+    }
+    poseCtx.drawImage(poseWebcam.canvas, 0, 0);
+    if (pose) {
+      tmPose.drawKeypoints(pose.keypoints, 0.5, poseCtx);
+      tmPose.drawSkeleton(pose.keypoints, 0.5, poseCtx);
+    }
+    window.requestAnimationFrame(poseLoop);
+  }
+
+  // ── IMAGE MODEL ──
+  let imgModel, imgWebcam, imgPredicting = false;
+  async function initImage() {
+    if (imgPredicting) return;
+    imgPredicting = true;
+    try {
+      const URL = "./image_model/";
+      imgModel = await tmImage.load(URL + "model.json", URL + "metadata.json");
+      const maxPred = imgModel.getTotalClasses();
+      imgWebcam = new tmImage.Webcam(220, 220, true);
+      await imgWebcam.setup();
+      await imgWebcam.play();
+      document.getElementById("webcam-container").appendChild(imgWebcam.canvas);
+      const labelBox = document.getElementById("image-labels");
+      labelBox.innerHTML = "";
+      for (let i = 0; i < maxPred; i++) {
+        const d = document.createElement("div");
+        labelBox.appendChild(d);
+      }
+      imgLoop();
+    } catch(e) {
+      alert("Error al cargar el modelo de imágenes. Asegúrate de haber subido la carpeta image_model/ al repositorio.");
+      imgPredicting = false;
+    }
+  }
+  async function imgLoop() {
+    imgWebcam.update();
+    const pred = await imgModel.predict(imgWebcam.canvas);
+    const labels = document.getElementById("image-labels");
+    for (let i = 0; i < pred.length; i++) {
+      labels.childNodes[i].innerHTML = pred[i].className + ": " + (pred[i].probability * 100).toFixed(1) + "%";
+    }
+    window.requestAnimationFrame(imgLoop);
+  }
+
+  // ── AUDIO MODEL ──
+  async function initAudio() {
+    const indicator = document.getElementById("audio-indicator");
+    indicator.style.background = "rgba(6,182,212,.15)";
+    indicator.style.borderColor = "rgba(6,182,212,.4)";
+    try {
+      const URL = "./audio_model/";
+      const recognizer = speechCommands.create(
+        "BROWSER_FFT", undefined,
+        URL + "model.json",
+        URL + "metadata.json"
+      );
+      await recognizer.ensureModelLoaded();
+      const classLabels = recognizer.wordLabels();
+      const labelBox = document.getElementById("audio-labels");
+      labelBox.innerHTML = "";
+      for (let i = 0; i < classLabels.length; i++) {
+        const d = document.createElement("div");
+        labelBox.appendChild(d);
+      }
+      recognizer.listen(result => {
+        indicator.textContent = "🔴";
+        for (let i = 0; i < classLabels.length; i++) {
+          labelBox.childNodes[i].innerHTML = classLabels[i] + ": " + (result.scores[i] * 100).toFixed(1) + "%";
+        }
+      }, {
+        includeSpectrogram: true,
+        probabilityThreshold: 0.75,
+        invokeCallbackOnNoiseAndUnknown: true,
+        overlapFactor: 0.50
+      });
+    } catch(e) {
+      alert("Error al cargar el modelo de audio. Asegúrate de haber subido la carpeta audio_model/ al repositorio.");
+      indicator.textContent = "🎙️";
+    }
+  }
+</script>
+
+</body>
+</html>
